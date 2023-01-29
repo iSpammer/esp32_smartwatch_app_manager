@@ -30,6 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double? percentValue;
   double? avgvalue = 0;
   double? currvalue = 0;
+  double? temp = 0;
+  double? batSOC = 0;
 
   void _onDataReceived(Uint8List data) {
     // Allocate buffer for parsed data
@@ -79,11 +81,15 @@ class _MyHomePageState extends State<MyHomePage> {
     var dateList = message.split(" ");
     double? analogMessage = double.tryParse(dateList[0].trim());
     double? analogMessage2 = double.tryParse(dateList[1].trim());
+    double? analogMessage3 = double.tryParse(dateList[2].trim());
+    double? analogMessage4 = double.tryParse(dateList[3].trim());
     setState(() {
       var percent = (analogMessage ?? 0) / 220;
-      percentValue = percent ; // inverse percent
+      percentValue = percent; // inverse percent
       avgvalue = analogMessage;
       currvalue = analogMessage2;
+      batSOC = analogMessage3;
+      temp = analogMessage4;
     });
 
     print("new msg $dateList perc ${percentValue!}");
@@ -136,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
         width: double.infinity,
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 20,),
             Builder(
               builder: (context) {
                 switch (_btStatus) {
@@ -146,15 +152,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     return PercentIndicator.connecting();
                   case BluetoothConnectionState.connected:
                     return PercentIndicator.connected(
-                      percent: percentValue ?? 0,
+                      percent: batSOC!/100 ?? 0,
                       avgValue: avgvalue!.toString(),
-
                     );
                   case BluetoothConnectionState.error:
                     return const PercentIndicator.error();
                 }
               },
             ),
+            const SizedBox(height: 50),
+            Card(child: ListTile(leading: Icon(Icons.battery_std) ,title: Text("Battery Percentage: ${batSOC!}"),),),
+            Card(child: ListTile(leading: Icon(Icons.monitor_heart) ,title: Text("Current BPM: ${currvalue!}"),),),
+            Card(child: ListTile(leading: Icon(Icons.monitor_heart_outlined) ,title: Text("AVG BPM: ${avgvalue!}"),),),
+            Card(child: ListTile(leading: Icon(Icons.sunny) ,title: Text("Current Temperature: ${temp!}"),),),
 
           ],
         ),

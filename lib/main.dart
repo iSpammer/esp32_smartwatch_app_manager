@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Soil Humidity App',
+      title: 'OssWatch',
       theme: ThemeData(
         primarySwatch: Colors.green,
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Heart Rate Monitor'),
+      home: const MyHomePage(title: 'OssWatch'),
     );
   }
 }

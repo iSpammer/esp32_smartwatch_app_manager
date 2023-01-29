@@ -8,7 +8,7 @@ class PercentIndicator extends StatelessWidget {
   final String? currValue;
 
   const PercentIndicator.connected({super.key, required this.percent, this.avgValue, this.currValue})
-      : color = null,
+      : color = Colors.green,
         _message = null;
 
   PercentIndicator.connecting({super.key})
@@ -23,7 +23,7 @@ class PercentIndicator extends StatelessWidget {
         avgValue = null,
         currValue = null,
       _message = 'Disconnected',
-        color = Colors.purple;
+        color = Colors.black38;
 
   const PercentIndicator.error({super.key})
       : percent = 1.0,
@@ -36,41 +36,57 @@ class PercentIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            SizedBox(
-              height: 210,
-              width: 210,
-              child: CircularProgressIndicator(
-                value: percent,
-                color: color,
-              ),
-            ),
-            SizedBox(
-              height: 210,
-              width: 210,
-              child: Center(
-                child: Text(
-                  _message != null
-                      ? _message!
-                      : '${((percent ?? 0) * 100).toStringAsFixed(0)}%',
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w200,
-                  ),
+
+            Stack(
+              children: [
+             Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _message == 'Disconnected' ? Container(child: Text("Connect to the Watch"),) :Container(
+                      //margin: EdgeInsets.all(20),
+                      width: 200,
+                      height: 205,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/twatch.jpeg'),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[ SizedBox(
+                      height: 210,
+                      width: 210,
+                      child: CircularProgressIndicator(
+                        value: percent,
+                        color: (percent!*100) < 20 ? Colors.red : (percent!*100) <35 && (percent!*100) > 20 ? Colors.orange : color,
+                      ),
+                    ),
+
+                    ]
+                ),
+              ],
             ),
 
-          ],
-        ),
+
+            // SizedBox(
+            //   height: 210,
+            //   width: 210,
+            //   child: CircularProgressIndicator(
+            //     value: percent,
+            //     color: color,
+            //   ),
+            // ),
+
+
         SizedBox(
           height: 10,
         ),
-        Text(avgValue == null || avgValue == "0" || percent == 0
-            ? "Calibration takes 10 minuts please wait"
-            : "Average BPM is " + avgValue!),
-        currValue == null || currValue == 0 ? Text("") : Text("Current Value is "+currValue.toString())
+
       ],
     );
   }
