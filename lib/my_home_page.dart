@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:lottie/lottie.dart';
 import 'package:test_esp32/bluetooth_devices.dart';
 import 'package:test_esp32/percent_indicator.dart';
 
@@ -152,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return PercentIndicator.connecting();
                   case BluetoothConnectionState.connected:
                     return PercentIndicator.connected(
-                      percent: batSOC!/100 ?? 0,
+                      percent: batSOC!/100 ,
                       avgValue: avgvalue!.toString(),
                     );
                   case BluetoothConnectionState.error:

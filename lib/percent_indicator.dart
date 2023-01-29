@@ -42,7 +42,7 @@ class PercentIndicator extends StatelessWidget {
              Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _message == 'Disconnected' ? Container(child: Text("Connect to the Watch"),) :Container(
+                    _message == 'Disconnected' ? Container(height: 200, child: Center(child: Text("Connect to the Watch")),) :Container(
                       //margin: EdgeInsets.all(20),
                       width: 200,
                       height: 205,
