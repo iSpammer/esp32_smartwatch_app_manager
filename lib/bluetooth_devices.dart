@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
+
+//connecting to the watch
 class BluetoothDevices extends StatelessWidget {
   const BluetoothDevices({super.key});
 

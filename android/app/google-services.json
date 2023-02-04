@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "169745281328",
+    "project_id": "twatch-58076",
+    "storage_bucket": "twatch-58076.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169745281328:android:c2a996bfc9bd6fc49e98f5",
+        "android_client_info": {
+          "package_name": "com.example.test_esp32"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169745281328-i62a2pphbmiuef19pisrp4udrbolmi5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB05YV5_9OE7i0xsiEQSBqRB4QQJi4vhzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169745281328-i62a2pphbmiuef19pisrp4udrbolmi5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

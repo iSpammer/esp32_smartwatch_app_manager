@@ -58,12 +58,13 @@ class PercentIndicator extends StatelessWidget {
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:[ SizedBox(
+                    children:[
+                      SizedBox(
                       height: 210,
                       width: 210,
                       child: CircularProgressIndicator(
                         value: percent,
-                        color: (percent!*100) < 20 ? Colors.red : (percent!*100) <35 && (percent!*100) > 20 ? Colors.orange : color,
+                        color: percent!= null ? (percent!*100) < 20 ? Colors.red : (percent!*100) <35 && (percent!*100) > 20 ? Colors.orange : color : Colors.black,
                       ),
                     ),
 
@@ -81,11 +82,6 @@ class PercentIndicator extends StatelessWidget {
             //     color: color,
             //   ),
             // ),
-
-
-        SizedBox(
-          height: 10,
-        ),
 
       ],
     );
