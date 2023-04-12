@@ -8,7 +8,7 @@
     Version log:
     
     2023-04-13:
-        v1.0.0  - Initial Public Beta
+        v1.0.1  - Initial Public Beta
         
 */
 // ==== DEFINES ===================================================================================
@@ -89,6 +89,7 @@ long lastBeat = 0; //Time at which the last beat occurred
 
 float beatsPerMinute;
 int beatAvg;
+int noreading = 0;
 
 // ==== Uncomment desired compile options =================================
 // ----------------------------------------
@@ -397,13 +398,17 @@ void updateText() {
   
 
   if(beatAvg > 55){
-    watch -> tft -> print("BPM: ");
-
-    watch -> tft -> println(beatAvg+"        ");  
+    watch -> tft -> print("BPM: "+String(beatAvg)+".......");
   }
   else{
     watch -> tft -> print("Calibrating");
-
+  }
+  watch -> tft -> println("");
+  if(noreading == 0){
+    watch -> tft -> print("Wear the watch properly");
+  }
+  else{
+    watch -> tft -> print("_______________________");
   }
 
 
@@ -475,7 +480,7 @@ void task1Callback() {
 
     beatsPerMinute = 60 / (delta / 1000.0);
 
-    if (beatsPerMinute < 255 && beatsPerMinute > 50)
+    if (beatsPerMinute < 255 && beatsPerMinute > 60)
     {
       rates[rateSpot++] = (byte)beatsPerMinute; //Store this reading in the array
       rateSpot %= RATE_SIZE; //Wrap variable
@@ -495,8 +500,13 @@ void task1Callback() {
   Serial.print(", Avg BPM=");
   Serial.print(beatAvg);
 
-  if (irValue < 50000)
+  if (irValue < 50000){
     Serial.print(" No finger?");
+    noreading = 0;
+  }
+  else{
+    noreading = 1;
+  }
 
   Serial.println();
 
