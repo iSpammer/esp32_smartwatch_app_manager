@@ -9,7 +9,6 @@
     
     2023-04-13:
         v1.0.0  - Initial Public Beta
-        v1.0.1  - Removed useless variables
         
 */
 // ==== DEFINES ===================================================================================
@@ -445,8 +444,8 @@ void updateWatch(){
 
 
   if(direction_flag == 1){
-    SerialBT.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc);
-    Serial.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc);
+    SerialBT.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc));
+    Serial.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc));
   }
   else{
     updateEdge();
