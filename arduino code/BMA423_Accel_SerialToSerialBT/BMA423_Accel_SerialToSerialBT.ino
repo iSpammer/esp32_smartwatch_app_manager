@@ -8,7 +8,8 @@
     Version log:
     
     2023-04-13:
-        v1.0.1  - Initial Public Beta
+        v1.0.0  - Initial Public Beta
+        v1.0.1  - Removed useless variables
         
 */
 // ==== DEFINES ===================================================================================
@@ -52,7 +53,7 @@ WiFiMulti wifiMulti;
 
 
 //for watch to Pi via wifi change this flag to 0, for watch to android/ios via bluetooth change this flag to 1
-int direction_flag = 1;
+int direction_flag = 0;
 
 // Insert your network credentials
 #define WIFI_SSID "Heker"
@@ -151,7 +152,8 @@ void task2Callback();
 
 // ==== Task definitions ========================
 Task t1 (TASK_IMMEDIATE, TASK_FOREVER, &task1Callback, &ts, true);
-Task t2 (TASK_IMMEDIATE, TASK_FOREVER, &task2Callback, &ts, true);
+
+Task t2 (TASK_MINUTE, TASK_FOREVER, &task2Callback, &ts, true);
 
 
 
@@ -359,8 +361,7 @@ void updateEdge() {
     // Add values in the document
     //
 
-    doc["curr_hr"] = beatsPerMinute;
-    doc["avg_hr"] = beatAvg;
+    doc["heartrate"] = beatAvg;
     doc["xacc"] = xacc;
     doc["yacc"] = yacc;
     doc["zacc"] = zacc;
@@ -441,14 +442,11 @@ void updateAcc(){
 
 // send the reading to the connected bluetooth/WiFi device
 void updateWatch(){
-  int temp = 0;
-  int uva = 0;
-  int uvb = 0;
-  int uvindx = 0;
+
 
   if(direction_flag == 1){
-    SerialBT.println(String(beatAvg) + " " + String(beatsPerMinute) + " " + String(batSOC) + " " + String(temp) + " " + String(watch -> power -> isChargeing())+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc) + " "+ String(uva)+ " "+ String(uvb)+ " "+ String(uvindx));
-    Serial.println(String(beatAvg) + " " + String(beatsPerMinute) + " " + String(batSOC) + " " + String(temp) + " " + String(watch -> power -> isChargeing())+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc) + " "+ String(uva)+ " "+ String(uvb)+ " "+ String(uvindx));
+    SerialBT.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc);
+    Serial.println(String(beatAvg) + " " + String(batSOC)+ " "+ String(xacc)+ " "+ String(yacc)+ " "+ String(zacc);
   }
   else{
     updateEdge();
