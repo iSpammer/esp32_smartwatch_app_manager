@@ -506,6 +506,8 @@ void task1Callback() {
   }
 
   Serial.println();
+  updateText();
+
 
 }
 
@@ -519,7 +521,6 @@ void task1Callback() {
 /**************************************************************************/
 void task2Callback() {
   batSOC = watch -> power -> getBattPercentage();
-  updateText();
 
   updateAcc();
  if(beatAvg > 50){
