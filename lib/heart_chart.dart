@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,13 +51,17 @@ class HeartChartState extends State<HeartChart> {
   //get the data from the firebase firestore server, saves into an arraylist
   Future<void> getData() async {
     print("id: ${await getDeviceIdentifier()}");
-    _reference = FirebaseFirestore.instance.collection(await getDeviceIdentifier());
+    bool isIOS = true;
+    if(Platform.isAndroid){
+      isIOS = false;
+    }
+    String tail =   isIOS ? "@ios.pi" : "@android.pi";
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection(await getDeviceIdentifier()+tail).limit(25).orderBy("timeStamp").get();
     // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _reference!.get();
+    // QuerySnapshot querySnapshot = await _reference!.get();
 
     // Get data from docs and convert map to List
 
-    // myList.map((e) => histogramData!.add(e.currHR!));
     setState(() {
 
       myList = querySnapshot.docs
@@ -68,10 +73,10 @@ class HeartChartState extends State<HeartChart> {
       while (myList!.length >25){
         myList!.removeAt(0);
       }
-      histogramData = List<double>.from(myList!.map((e) => e.currHR));
+      histogramData = List<double>.from(myList!.map((e) => e.heartrate));
     });
     // print(querySnapshot.docs.first.data());
-    print("meawww ${myList!.first.currHR}");
+    print("meawww ${myList!.first.heartrate}");
   }
 
 
@@ -81,11 +86,11 @@ class HeartChartState extends State<HeartChart> {
         appBar: AppBar(
           backgroundColor: Color(0x44000000),
           elevation: 0,
-          title: Text("Health Data"),
+          title: const Text("Health Data"),
 
         ),
         body: Center(
-            child: myList!.length == 0 ? CircularProgressIndicator() : Container(
+            child: myList!.length == 0 ? const CircularProgressIndicator() : Container(
                 child: SfCartesianChart(
                     primaryXAxis: CategoryAxis(),
                     series: <ChartSeries>[
@@ -93,7 +98,7 @@ class HeartChartState extends State<HeartChart> {
                           dataSource: myList!,
                           // display the data
                           xValueMapper: (TWatchData data, _) => data.timestamp.toString(),
-                          yValueMapper: (TWatchData data, _) => data.currHR
+                          yValueMapper: (TWatchData data, _) => data.heartrate
                       )
                     ]
                 )

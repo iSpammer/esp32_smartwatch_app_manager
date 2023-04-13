@@ -4,30 +4,30 @@ class PercentIndicator extends StatelessWidget {
   final double? percent;
   final Color? color;
   final String? _message;
-  final String? avgValue;
+  final String? heartrate;
   final String? currValue;
 
-  const PercentIndicator.connected({super.key, required this.percent, this.avgValue, this.currValue})
+  const PercentIndicator.connected({super.key, required this.percent, this.heartrate, this.currValue})
       : color = Colors.green,
         _message = null;
 
   PercentIndicator.connecting({super.key})
       : percent = null,
-        avgValue = null,
+        heartrate = null,
         currValue = null,
         _message = 'Connecting...',
         color = Colors.grey.shade300;
 
   const PercentIndicator.disconnected({super.key})
       : percent = 1.0,
-        avgValue = null,
+        heartrate = null,
         currValue = null,
       _message = 'Disconnected',
         color = Colors.black38;
 
   const PercentIndicator.error({super.key})
       : percent = 1.0,
-        avgValue = null,
+        heartrate = null,
         currValue = null,
       _message = 'Error',
         color = Colors.red;

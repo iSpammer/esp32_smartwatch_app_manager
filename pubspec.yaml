@@ -40,6 +40,10 @@ dependencies:
   cloud_firestore:
   device_info_plus:
   syncfusion_flutter_charts:
+  dio:
+  shared_preferences:
+  is_first_run:
+  fluttertoast:
 
 flutter_icons:
   android: "launcher_icon"
