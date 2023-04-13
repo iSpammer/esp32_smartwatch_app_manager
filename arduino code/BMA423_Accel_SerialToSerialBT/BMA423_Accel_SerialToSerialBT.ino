@@ -52,7 +52,7 @@ WiFiMulti wifiMulti;
 
 
 //for watch to Pi via wifi change this flag to 0, for watch to android/ios via bluetooth change this flag to 1
-int direction_flag = 0;
+int direction_flag = 1;
 
 // Insert your network credentials
 #define WIFI_SSID "Heker"
@@ -82,7 +82,7 @@ int batSOC = 0;
 // heart rate data
 MAX30105 particleSensor;
 
-const byte RATE_SIZE = 20; //Increase this for more averaging. 4 is good.
+const byte RATE_SIZE = 10; //Increase this for more averaging. 4 is good.
 byte rates[RATE_SIZE]; //Array of heart rates
 byte rateSpot = 0;
 long lastBeat = 0; //Time at which the last beat occurred
@@ -152,7 +152,7 @@ void task2Callback();
 // ==== Task definitions ========================
 Task t1 (TASK_IMMEDIATE, TASK_FOREVER, &task1Callback, &ts, true);
 
-Task t2 (TASK_MINUTE, TASK_FOREVER, &task2Callback, &ts, true);
+Task t2 (15*TASK_SECOND, TASK_FOREVER, &task2Callback, &ts, true);
 
 
 
@@ -160,12 +160,14 @@ Task t2 (TASK_MINUTE, TASK_FOREVER, &task2Callback, &ts, true);
 
 /**************************************************************************/
 /*!
-    @brief    Standard Arduino SETUP method - initialize sketch
+    @brief    Standard Arduino SETUP method - initialize components
     @param    none
     @returns  none
 */
 /**************************************************************************/
 void setup() {
+    Serial.begin(115200);
+
 if(direction_flag == 1){
     SerialBT.begin("OssWatch"); //Bluetooth device name
   }
@@ -216,7 +218,6 @@ if(direction_flag == 1){
     registerEdge();
   }
   #if defined(_DEBUG_) || defined(_TEST_)
-  Serial.begin(115200);
   delay(2000);
   _PL("Scheduler Template: setup()");
 #endif
@@ -492,9 +493,8 @@ void task1Callback() {
 
   Serial.print("IR=");
   Serial.print(irValue);
+
   Serial.print(", BPM=");
-  Serial.print(beatsPerMinute);
-  Serial.print(", Avg BPM=");
   Serial.print(beatAvg);
 
   if (irValue < 50000){
